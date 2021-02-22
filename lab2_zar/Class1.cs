@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using MySql.Data.MySqlClient;
 using System.Data.Common;
+using System.Data;
 
 namespace lab2_zar
 {
@@ -50,7 +51,16 @@ namespace lab2_zar
             }
             return -1;
         }
+        public DataTable getTableInfo(string query)
+        {
+            MySqlCommand queryExecute = new MySqlCommand(query, Connection);
+            DataTable ass = new DataTable();
+            Connection.Open();
+            ass.Load(queryExecute.ExecuteReader());
+            Connection.Close();
+            return ass;
 
+        }
         public long insert(int id_fio, string work, int salary)
         {
             MySqlCommand command = Connection.CreateCommand();

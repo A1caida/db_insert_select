@@ -32,7 +32,17 @@
         <TextBox x:Name="view1" Width="376" Height="242"  IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="2" />
         <Button x:Name="button4" Content="Вывод ФИО" Click="vivodfio" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="186"  />
         <Button x:Name="button3" Content="Вывод работы" Click="vivodrab" Grid.Column="3" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="186"  />
-        <TextBox x:Name="fio_id" Height="26"  TextWrapping="Wrap" Text="TextBox" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="187"/>
         <Button x:Name="button5" Content="Удалить" Click="delete" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="186"  />
+        <ComboBox 
+            ItemsSource="{Binding}"
+            x:Name="remove_id" 
+            HorizontalAlignment="Center"           
+            VerticalAlignment="Center" 
+            Width="178" Height="20"
+            DisplayMemberPath="surname" 
+            SelectedValuePath="id" 
+            IsTextSearchEnabled="False" 
+            IsEditable="True" Grid.Row="3" 
+        />
     </Grid>
 </Window>

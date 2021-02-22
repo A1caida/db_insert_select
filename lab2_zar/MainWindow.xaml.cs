@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data;
 
 
 
@@ -19,14 +20,17 @@ namespace lab2_zar
 {
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
+            db con = new db("127.0.0.1", "root", "", "a1caida");
+            remove_id.ItemsSource = con.getTableInfo("SELECT  uwu.id,  `surname` FROM `uwu` join `owo` on `id_fio` = owo.id").AsDataView();
         }
         private void Register(object sender, RoutedEventArgs e)
         {
-            db con = new db("127.0.0.1", "root", "", "a1caida");
 
+            db con = new db("127.0.0.1", "root", "", "a1caida");
             string surname = sur.Text;
             string name = Name.Text;
             string otches = otch.Text;
@@ -85,7 +89,7 @@ namespace lab2_zar
         {
             db con = new db("127.0.0.1", "root", "", "a1caida");
 
-            int id = Convert.ToInt32(fio_id.Text);
+            int id = Convert.ToInt32(remove_id.SelectedValue);
            
             if (con.delete(id) == -1)
             {
