@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,6 +61,16 @@ namespace lab2_zar
             return ass;
 
         }
+        public DataTable getTableInfoo(string query)
+        {
+            MySqlCommand queryExecute = new MySqlCommand(query, Connection);
+            DataTable ass = new DataTable();
+            Connection.Open();
+            ass.Load(queryExecute.ExecuteReader());
+            Connection.Close();
+            return ass;
+
+        }
         public long insert(int id_fio, string work, int salary)
         {
             MySqlCommand command = Connection.CreateCommand();
@@ -89,7 +99,7 @@ namespace lab2_zar
         public long delete(int id)
         {
             MySqlCommand command = Connection.CreateCommand();
-            command.CommandText = "DELETE FROM a1caida.uwu WHERE `id` =(?id)";
+            command.CommandText = "DELETE FROM a1caida.uwu WHERE `id`=(?id)";
             command.Parameters.Add("?id", MySqlDbType.Int32).Value = id;
 
             try
@@ -119,11 +129,11 @@ namespace lab2_zar
             public string zarplata;
         }
 
-        public List<str> kek()
+        public List<str> kek(int id)
         {
             MySqlCommand command = Connection.CreateCommand();
-            command.CommandText = "SELECT uwu.id,`surname`, `name`, `otch`,`work`,`salary` FROM a1caida.uwu JOIN  a1caida.owo ON uwu.id_fio = owo.id";
-
+            command.CommandText = "SELECT uwu.id,`surname`, `name`, `otch`,`work`,`salary` FROM a1caida.uwu JOIN  a1caida.owo ON uwu.id_fio = owo.id WHERE id_fio = @id ";
+            command.Parameters.AddWithValue("@id", id);
             List<str> bd = new List<str>();
 
             try
@@ -153,11 +163,46 @@ namespace lab2_zar
             return bd;
 
         }
+
+        public List<str> Kurisutina()
+        {
+            MySqlCommand command = Connection.CreateCommand();
+            command.CommandText = "SELECT uwu.id,`surname`, `name`, `otch`,`work`,`salary` FROM a1caida.uwu JOIN  a1caida.owo ON uwu.id_fio = owo.id";          
+            List<str> bd = new List<str>();
+
+            try
+            {
+               // Connection.Open();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        str databd = new str
+                        {
+                            id = reader.GetString(0),
+                            familia = reader.GetString(1),
+                            imya = reader.GetString(2),
+                            otchestvo = reader.GetString(3),
+                            rabota = reader.GetString(4),
+                            zarplata = reader.GetString(5),
+                        };
+                        bd.Add(databd);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return bd;
+
+        }
+
         public List<str> lol()
         {
             MySqlCommand command = Connection.CreateCommand();
             command.CommandText = "SELECT `id`,`surname`, `name`, `otch` FROM a1caida.owo";
-
+            //command.Parameters.AddWithValue("@id", id);
             List<str> bd = new List<str>();
 
             try
